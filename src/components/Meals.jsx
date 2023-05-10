@@ -1,7 +1,9 @@
+import { useGlobalContext } from "../context"
+
 const Meals = () => {
-    return(
-        <div>Shake and Bake</div>
-    )
+    const context = useGlobalContext()
+    console.log(context)
+    return <div>Shake and Bake</div>
 }
 
 export default Meals
