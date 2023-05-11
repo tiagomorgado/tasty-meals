@@ -1,9 +1,18 @@
 import { useGlobalContext } from "../context"
 
 const Meals = () => {
-    const context = useGlobalContext()
-    console.log(context)
-    return <div>Shake and Bake</div>
+    const {meals} = useGlobalContext();
+
+    return (
+    <section>
+        {
+            meals.map((singleMeal) => {
+                console.log(singleMeal)
+                return <h4 key={singleMeal.idMeal}>Single Meal</h4>
+            })
+        }
+    </section>
+    )
 }
 
 export default Meals
