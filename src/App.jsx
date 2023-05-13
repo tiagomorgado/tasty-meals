@@ -7,12 +7,10 @@ import './App.css';
 function App() {
   return (
     <main>
-      Tasty Meals App
-      <Meals/>
+      <Search/>
       {/* <Favorites/> */}
+      <Meals/>
       {/* <Modal/> */}
-      {/* <Search/> */}
-      
     </main>
   )
 }
