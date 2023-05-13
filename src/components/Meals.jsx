@@ -12,6 +12,14 @@ const Meals = () => {
         )
     }
 
+    if(meals.length < 1) {
+        return(
+            <section className="section">
+                <h4>No Meals Matched Your Search Term. Please Try Again</h4>
+            </section>
+        )
+    }
+
        return (
     <section className='section-center'>
         {
