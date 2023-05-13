@@ -162,7 +162,7 @@ ul {
   width: 100%;
 }
 
-edia screen and (min-width: 992px) {
+@media screen and (min-width: 992px) {
   .section-center {
     grid-template-columns: 1fr 1fr 1fr;
   }
