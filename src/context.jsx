@@ -33,10 +33,17 @@ const AppProvider = ({children}) => {
     const fetchRandomMeal = () => {
         fetchMeals(randomMealUrl)
     }
-    
+
+    /* Loads Meals when application initially loads for the first time */
     useEffect(() => {
+        fetchMeals(allMealsUrl)
+    },[])
+    
+    /* Checks if the search term is empty. If yes, then take no action, otherwise fetch meals with available search term */
+    useEffect(() => {
+        if(!searchTerm) return;
         fetchMeals(`${allMealsUrl}${searchTerm}`)
-        /* fetchMeals(randomMealUrl) */
+        
     },[searchTerm])
     return <AppContext.Provider value={{meals, loading, setSearchTerm, fetchRandomMeal}}>
         {children}
