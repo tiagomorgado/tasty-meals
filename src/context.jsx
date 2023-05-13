@@ -43,7 +43,6 @@ const AppProvider = ({children}) => {
     useEffect(() => {
         if(!searchTerm) return;
         fetchMeals(`${allMealsUrl}${searchTerm}`)
-        
     },[searchTerm])
     return <AppContext.Provider value={{meals, loading, setSearchTerm, fetchRandomMeal}}>
         {children}
