@@ -9,7 +9,7 @@ const Modal = () => {
         <aside className='modal-overlay'>
             <div className='modal-container'>
                 <img src={image} alt={title} className='img modal-img'/>
-                <div className='modal-container'>
+                <div className='modal-content'>
                     <h1>{title}</h1>
                     <p>Cooking Instructions</p>
                     <p>{text}</p>
