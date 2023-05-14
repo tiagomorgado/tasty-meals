@@ -5,6 +5,17 @@ const AppContext = React.createContext()
 const allMealsUrl = 'https://www.themealdb.com/api/json/v1/1/search.php?s='
 const randomMealUrl = 'https://www.themealdb.com/api/json/v1/1/random.php'
 
+const getFavoritesFromLocalStorage = () => {
+    let favorites = localStorage.getItem("favorites")
+    if(favorites) {
+        favorites = JSON.parse(localStorage.getItem("favorites"))
+    }else{
+        favorites = []
+    }
+
+    return favorites
+}
+
 /* Context API to prevent Prop drilling */
 const AppProvider = ({children}) => {
     /* Meal state variables */
@@ -17,7 +28,7 @@ const AppProvider = ({children}) => {
     const [selectedMeal, setSelectedMeal] = useState(null)
 
     /* Favorites state variables */
-    const [favorites, setFavorites] = useState([])
+    const [favorites, setFavorites] = useState(getFavoritesFromLocalStorage())
 
     const fetchMeals = async (url) => {
         setLoading(true);
@@ -64,11 +75,13 @@ const AppProvider = ({children}) => {
         
         const updatedFavorites = [...favorites ,meal]
         setFavorites(updatedFavorites)
+        localStorage.setItem("favorites", JSON.stringify(updatedFavorites))
     }
 
     const removeFromFavorites = (idMeal) => {
         const updatedFavorites = favorites.filter((meal) => meal.idMeal !== idMeal)
         setFavorites(updatedFavorites);
+        localStorage.setItem("favorites", JSON.stringify(updatedFavorites))
     }
 
     /* Loads Meals when application initially loads for the first time */
@@ -82,7 +95,7 @@ const AppProvider = ({children}) => {
         fetchMeals(`${allMealsUrl}${searchTerm}`)
     },[searchTerm])
 
-    return <AppContext.Provider value={{meals, loading, setSearchTerm, fetchRandomMeal, showModal, selectMeal, selectedMeal, closeModal, favorites, addToFavorites, removeFromFavorites}}>
+    return <AppContext.Provider value={{meals, loading, setSearchTerm, fetchRandomMeal, showModal, selectMeal, selectedMeal, closeModal, favorites, addToFavorites, removeFromFavorites, getFavoritesFromLocalStorage}}>
         {children}
     </AppContext.Provider>
 }
