@@ -7,12 +7,32 @@ const randomMealUrl = 'https://www.themealdb.com/api/json/v1/1/random.php'
 
 /* Context API to prevent Prop drilling */
 const AppProvider = ({children}) => {
+    /* Meal state variables */
     const [loading, setLoading] = useState(false)
     const [meals, setMeals] = useState([])
     const [searchTerm, setSearchTerm] = useState('')
 
+    /* Modal state variables */
     const [showModal, setShowModal] = useState(false)
     const [selectedMeal, setSelectedMeal] = useState(null)
+
+    /* Favorites state variables */
+    const [favorites, setFavorites] = useState([])
+
+    const addToFavorites = (idMeal) => {
+        const alreadyFavorite = favorites.find((meal) => meal.idMeal === idMeal)
+        if(alreadyFavorite) return
+        const meal = meals.find((meal) => meals.idMeal === idMeal)
+
+        const updatedFavorites = [...favorites ,meal]
+        setFavorites(updatedFavorites)
+    }
+
+    const removeFromFavorites = (idMeal) => {
+        const updatedFavorites = favorites.find((meal) => meal.idMeal !== idMeal)
+        setFavorites(updatedFavorites);
+    }
+
 
     const fetchMeals = async (url) => {
         setLoading(true);
@@ -58,7 +78,7 @@ const AppProvider = ({children}) => {
         fetchMeals(`${allMealsUrl}${searchTerm}`)
     },[searchTerm])
 
-    return <AppContext.Provider value={{meals, loading, setSearchTerm, fetchRandomMeal, showModal, selectMeal, selectedMeal, closeModal}}>
+    return <AppContext.Provider value={{meals, loading, setSearchTerm, fetchRandomMeal, showModal, selectMeal, selectedMeal, closeModal, addToFavorites, removeFromFavorites}}>
         {children}
     </AppContext.Provider>
 }
