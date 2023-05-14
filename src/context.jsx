@@ -7,12 +7,12 @@ const randomMealUrl = 'https://www.themealdb.com/api/json/v1/1/random.php'
 
 /* Context API to prevent Prop drilling */
 const AppProvider = ({children}) => {
-    const [loading, setLoading] = useState(false);
+    const [loading, setLoading] = useState(false)
     const [meals, setMeals] = useState([])
     const [searchTerm, setSearchTerm] = useState('')
-    
 
-    console.log(searchTerm)
+    const [showModal, setShowModal] = useState(false)
+    const [selectedMeal, setSelectedMeal] = useState(null)
 
     const fetchMeals = async (url) => {
         setLoading(true);
@@ -34,6 +34,15 @@ const AppProvider = ({children}) => {
         fetchMeals(randomMealUrl)
     }
 
+    const selectMeal = (idMeal, isFavoriteMeal) => {
+        let meal;
+
+        meal = meals.find((meal) => meal.idMeal === idMeal);
+
+        setSelectedMeal(meal)
+        setShowModal(true)
+    }
+
     /* Loads Meals when application initially loads for the first time */
     useEffect(() => {
         fetchMeals(allMealsUrl)
@@ -44,7 +53,8 @@ const AppProvider = ({children}) => {
         if(!searchTerm) return;
         fetchMeals(`${allMealsUrl}${searchTerm}`)
     },[searchTerm])
-    return <AppContext.Provider value={{meals, loading, setSearchTerm, fetchRandomMeal}}>
+
+    return <AppContext.Provider value={{meals, loading, setSearchTerm, fetchRandomMeal, showModal, selectMeal, selectedMeal}}>
         {children}
     </AppContext.Provider>
 }
