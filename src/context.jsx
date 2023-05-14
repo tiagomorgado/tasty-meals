@@ -43,6 +43,10 @@ const AppProvider = ({children}) => {
         setShowModal(true)
     }
 
+    const closeModal = () => {
+        setShowModal(false)
+    }
+
     /* Loads Meals when application initially loads for the first time */
     useEffect(() => {
         fetchMeals(allMealsUrl)
@@ -54,7 +58,7 @@ const AppProvider = ({children}) => {
         fetchMeals(`${allMealsUrl}${searchTerm}`)
     },[searchTerm])
 
-    return <AppContext.Provider value={{meals, loading, setSearchTerm, fetchRandomMeal, showModal, selectMeal, selectedMeal}}>
+    return <AppContext.Provider value={{meals, loading, setSearchTerm, fetchRandomMeal, showModal, selectMeal, selectedMeal, closeModal}}>
         {children}
     </AppContext.Provider>
 }
